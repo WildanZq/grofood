@@ -2,14 +2,31 @@ import React from 'react';
 import { View, ScrollView, Image, TouchableWithoutFeedback, Text } from 'react-native';
 import { connect } from 'react-redux';
 
+import moneyFormat from '../../constants/moneyFormat';
 import Button from '../../components/Button';
 import BuyerNavigator from '../../components/BuyerNavigator';
 import MenuList from '../../components/MenuList';
 
 class SupplierDetailScreen extends React.Component {
     state = {
-        cart: [],
-        total: 0
+        total: 0,
+        foodList: []
+    };
+
+    handleBuy = (data) => {
+        if (this.state.foodList.filter(val => val.id === data.id).length) {
+            let newList = this.state.foodList;
+            newList.filter(val => val.id === data.id)[0].qty = data.qty;
+            this.setState({ foodList: newList });
+        } else {
+            this.state.foodList.push({...data, qty: data.qty});
+        }
+
+        let total = 0;
+        this.state.foodList.map(val => {
+            total += val.price * val.qty
+        });
+        this.setState({ total });
     };
 
     render() {
@@ -59,14 +76,14 @@ class SupplierDetailScreen extends React.Component {
                             <Text style={{ fontSize: 12, marginTop: 4 }}>4k Reviews</Text>
                         </View>
                     </View>
-                    <MenuList data={data.menu} />
+                    <MenuList data={data.menu} buy={this.handleBuy} />
                 </ScrollView>
                 <TouchableWithoutFeedback
                     onPress={() => this.props.navigation.goBack()}>
-                    <View style={{ position: 'absolute', top: 20, left: 16 }}>
+                    <View style={{ position: 'absolute', top: 12, left: 16, backgroundColor: '#fff', borderRadius: 20 }}>
                         <Image
                             source={require('../../assets/back_dark.png')}
-                            style={{ width: 18, height: 20 }} />
+                            style={{ width: 32, height: 32 }} />
                     </View>
                 </TouchableWithoutFeedback>
                 <View style={{
@@ -88,7 +105,7 @@ class SupplierDetailScreen extends React.Component {
                     shadowOpacity: .25 }}>
                     <View>
                         <Text>Total</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#000' }}>Rp{this.state.total}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#000' }}>{moneyFormat(this.state.total)}</Text>
                     </View>
                     <Button text='Checkout' />
                 </View>
