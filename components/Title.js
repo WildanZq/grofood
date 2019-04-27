@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
 
-const Title = ({ text='Judul' }) => {
-    const onSearch = () => {};
+const Title = ({ text='Judul', back=false, navigation }) => {
+    const onSearch = () => {
+        navigation.navigate('Search');
+    };
 
     return (
         <View style={styles.container}>
