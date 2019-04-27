@@ -5,11 +5,15 @@ const Title = ({ text='Judul', back=false, navigation }) => {
     const onSearch = () => {
         navigation.navigate('Search');
     };
-    const backBtn = back ? <Image source={require('../assets/back_dark.png')} style={{ width: 12, marginRight: 6 }} /> : null;
+    const backBtn = back ? 
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+            <Image source={require('../assets/back.png')} style={{ width: 15, height: 16, marginRight: 12 }} />
+        </TouchableWithoutFeedback> : 
+        null;
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {backBtn}
                 <Text style={styles.title}>{text}</Text>
             </View>

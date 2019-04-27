@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Image, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback, Text, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import moneyFormat from '../../constants/moneyFormat';
@@ -29,6 +29,16 @@ class SupplierDetailScreen extends React.Component {
         this.setState({ total });
     };
 
+    handleCheckout = () => {
+        const list = this.state.foodList.filter(val => val.qty != 0 && !isNaN(val.qty))
+        if (list.length === 0) {
+            Alert.alert('', 'Add a food first');
+            return;
+        }
+
+        this.props.navigation.navigate('Checkout', { data: this.state.foodList, total: this.state.total, supplier: this.props.navigation.getParam('data', {}) });
+    };
+
     render() {
         const { navigation } = this.props;
         const data = navigation.getParam('data', {});
@@ -45,7 +55,7 @@ class SupplierDetailScreen extends React.Component {
                     <View style={{ marginHorizontal: 16, marginTop: 16, marginBottom: 20 }}>
                         <Text style={{ fontSize: 24, color: '#000', fontWeight: 'bold' }}>{data.title}</Text>
                         <Text style={{ fontSize: 14, color: '#000', marginTop: 4 }}>{data.address}</Text>
-                        <Text style={{ fontSize: 14, color: '#747474' }}>Open 08:00 - 20.00</Text>
+                        <Text style={{ fontSize: 14, color: '#747474' }}>{`Open ${data.open} - ${data.close}`}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                         <View style={{ alignItems: 'center' }}>
@@ -80,7 +90,7 @@ class SupplierDetailScreen extends React.Component {
                 </ScrollView>
                 <TouchableWithoutFeedback
                     onPress={() => this.props.navigation.goBack()}>
-                    <View style={{ position: 'absolute', top: 12, left: 16, backgroundColor: '#fff', borderRadius: 20 }}>
+                    <View style={{ position: 'absolute', top: 22, left: 12, backgroundColor: '#fff', borderRadius: 20 }}>
                         <Image
                             source={require('../../assets/back_dark.png')}
                             style={{ width: 32, height: 32 }} />
@@ -107,7 +117,7 @@ class SupplierDetailScreen extends React.Component {
                         <Text>Total</Text>
                         <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#000' }}>{moneyFormat(this.state.total)}</Text>
                     </View>
-                    <Button text='Checkout' />
+                    <Button text='Checkout' onPress={this.handleCheckout} />
                 </View>
                 <BuyerNavigator navigation={this.props.navigation} />
             </View>

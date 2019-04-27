@@ -37,13 +37,13 @@ class MenuList extends React.Component {
 
         if (this.state.foodList.filter(val => val.id === this.state.dialogData.id).length) {
             let newList = this.state.foodList;
-            newList.filter(val => val.id === this.state.dialogData.id)[0].qty = this.state.qty;
+            newList.filter(val => val.id === this.state.dialogData.id)[0].qty = Math.floor(this.state.qty);
             this.setState({ foodList: newList });
         } else {
-            this.state.foodList.push({...this.state.dialogData, qty: this.state.qty});
+            this.state.foodList.push({...this.state.dialogData, qty: Math.floor(this.state.qty)});
         }
 
-        this.props.buy({...this.state.dialogData, qty: parseInt(this.state.qty)});
+        this.props.buy({...this.state.dialogData, qty: Math.floor(parseInt(this.state.qty))});
         this.setState({
             dialogVisible: false,
             qty: '',

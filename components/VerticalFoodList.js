@@ -15,14 +15,15 @@ const VerticalFoodList = ({ data, title, navigation }) => {
                     style={{ height: 72, width: 72, borderRadius: 8 }} />
             </View> :
             <View style={{ backgroundColor: '#b4b4b4', width: 72, height: 72, borderRadius: 8 }}></View>;
-        
+
         return (
             <TouchableOpacity key={val.id} onPress={() => onClick(val.id)} >
                 <View style={{ flexDirection: 'row', marginBottom: 12 }}>
                     {Img}
                     <View style={{ paddingLeft: 12, justifyContent: 'center', width: '100%' }}>
-                        <Text style={{ color: '#000', fontSize: 16, marginBottom: 4 }}>{val.title}</Text>
-                        <Text>{val.address}</Text>
+                        <Text style={{ color: '#000', fontSize: 18, marginBottom: 2 }}>{val.title}</Text>
+                        <Text style={{ color: '#000', fontSize: 12 }}>{val.address}</Text>
+                        <Text style={{ color: '#888', fontSize: 12 }}>{`Open ${val.open} - ${val.close}`}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
