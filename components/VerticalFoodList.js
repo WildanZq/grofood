@@ -1,20 +1,20 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 
-const Title = ({ data, title, navigation }) => {
+const VerticalFoodList = ({ data, title, navigation }) => {
     const onClick = (id) => {
-        const item = data.filter(val => val.id === id);
+        const item = data.filter(val => val.id === id)[0];
         navigation.navigate('SupplierDetail', { data: item });
     };
 
     const List = data.map((val, i) => {
         const Img = val.img ?
-            <View style={{ backgroundColor: '#b4b4b4', width: 82, height: 82, borderRadius: 8, overflow: 'hidden' }}>
+            <View style={{ backgroundColor: '#b4b4b4', width: 72, height: 72, borderRadius: 8, overflow: 'hidden' }}>
                 <Image
                     source={{ uri: val.img }}
-                    style={{ height: 82, width: 82, borderRadius: 8 }} />
+                    style={{ height: 72, width: 72, borderRadius: 8 }} />
             </View> :
-            <View style={{ backgroundColor: '#b4b4b4', width: 82, height: 82, borderRadius: 8 }}></View>;
+            <View style={{ backgroundColor: '#b4b4b4', width: 72, height: 72, borderRadius: 8 }}></View>;
         
         return (
             <TouchableOpacity key={val.id} onPress={() => onClick(val.id)} >
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
-        marginBottom: 8,
+        marginBottom: 10,
     }
 });
 
-export default Title;
+export default VerticalFoodList;

@@ -6,8 +6,8 @@ import Styles from '../constants/Styles';
 
 export default Button = ({ text, type = 'round', onPress, style }) => {
     const btnStyle = type === 'round' ? { ...Styles.btnRound } : { ...Styles.btnSmall };
-    const padding = type === 'small' ? { paddingVertical: 6, paddingHorizontal: 12 } : { paddingVertical: 12, paddingHorizontal: 36 };
-    const font = type === 'small' ? { color: '#fff', textAlign: 'center', fontSize: 12 } : { color: '#fff', textAlign: 'center', fontSize: 18 }
+    const padding = type === 'small' ? { paddingVertical: 4, paddingHorizontal: 12 } : { paddingVertical: 8, paddingHorizontal: 20 };
+    const font = type === 'small' ? { color: '#fff', textAlign: 'center', fontSize: 12, fontWeight: 'bold' } : { color: '#fff', textAlign: 'center', fontSize: 14, fontWeight: 'bold' }
     const TouchableByPlatform = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableHighlight;
     const bgColor = Colors.primary;
 

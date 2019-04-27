@@ -1,8 +1,11 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 
-const Title = ({ data, title, navigation }) => {
-    const onClick = (id) => { };
+const HorizontalFoodList = ({ data, title, navigation }) => {
+    const onClick = (id) => {
+        const item = data.filter(val => val.id === id)[0];
+        navigation.navigate('SupplierDetail', { data: item });
+    };
 
     const List = data.map((val, i) => {
         const mLeft = i === 0 ? 16 : 6;
@@ -60,9 +63,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
-        marginBottom: 8,
+        marginBottom: 10,
         marginLeft: 16
     }
 });
 
-export default Title;
+export default HorizontalFoodList;

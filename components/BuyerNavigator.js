@@ -18,7 +18,7 @@ class BuyerNavigator extends React.Component {
                                 this.props.active === 'home' ?
                                     require('../assets/home_active.png') : require('../assets/home.png')
                             }
-                            style={{ height: 22, width: 22 }} />
+                            style={{ height: 20, width: 20 }} />
                         <Text style={this.props.active === 'home' ? styles.textActive : styles.text}>Home</Text>
                     </View>
                 </TouchableWithoutFeedback>
@@ -29,7 +29,7 @@ class BuyerNavigator extends React.Component {
                                 this.props.active === 'transaction' ?
                                     require('../assets/transaction_active.png') : require('../assets/transaction.png')
                             }
-                            style={{ height: 22, width: 22 }} />
+                            style={{ height: 20, width: 20 }} />
                         <Text style={this.props.active === 'transaction' ? styles.textActive : styles.text}>Transactions</Text>
                     </View>
                 </TouchableWithoutFeedback>
@@ -40,7 +40,7 @@ class BuyerNavigator extends React.Component {
                                 this.props.active === 'favourites' ?
                                     require('../assets/fav_active.png') : require('../assets/fav.png')
                             }
-                            style={{ height: 22, width: 22 }} />
+                            style={{ height: 20, width: 20 }} />
                         <Text style={this.props.active === 'favourites' ? styles.textActive : styles.text}>Favourites</Text>
                     </View>
                 </TouchableWithoutFeedback>
@@ -51,7 +51,7 @@ class BuyerNavigator extends React.Component {
                                 this.props.active === 'profile' ?
                                     require('../assets/profile_active.png') : require('../assets/profile.png')
                             }
-                            style={{ height: 22, width: 22 }} />
+                            style={{ height: 20, width: 20 }} />
                         <Text style={this.props.active === 'profile' ? styles.textActive : styles.text}>Profile</Text>
                     </View>
                 </TouchableWithoutFeedback>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         backgroundColor: '#fff',
-        paddingVertical: 8,
+        paddingVertical: 10,
         paddingHorizontal: 12,
         elevation: 8,
         shadowColor: '#000',
@@ -78,11 +78,13 @@ const styles = StyleSheet.create({
         shadowOpacity: .25
     },
     text: {
-        color: '#b4b4b4'
+        color: '#b4b4b4',
+        fontSize: 12
     },
     textActive: {
         color: Colors.primary,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 12
     }
 });
 

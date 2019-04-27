@@ -21,7 +21,7 @@ export default StyleSheet.create({
         shadowOpacity: .25
     },
     btnSmall: {
-        borderRadius: 3,
+        borderRadius: 4,
         elevation: 4,
         shadowColor: '#000',
         shadowOffset: {
