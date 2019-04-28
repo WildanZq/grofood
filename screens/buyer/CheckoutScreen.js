@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, ScrollView, Text, DatePickerAndroid, TimePickerAndroid, Image, TouchableOpacity, Alert } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { View, ScrollView, Text, DatePickerAndroid, TimePickerAndroid, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 
+import { updateTransaction } from '../../actions';
 import BuyerNavigator from '../../components/BuyerNavigator';
 import Title from '../../components/Title';
 import moneyFormat from '../../constants/moneyFormat';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class CheckoutScreen extends React.Component {
     state = {
         selectedDate: 'Select a date',
-        selectedTime: 'Select a time'
+        selectedTime: 'Select a time',
+        loading: false
     };
 
     List = this.props.navigation.getParam('data', []).map((val, i) => {
@@ -60,27 +63,20 @@ class CheckoutScreen extends React.Component {
             return;
         }
 
-        const transaction = await AsyncStorage.getItem('transaction');
-        let data;
-        if (transaction !== null) {
-            data = JSON.stringify(transaction);
-        } else {
-            data = [];
-        }
+        this.setState({ loading: true });
 
         const { navigation } = this.props;
-        data.push({ 
-            menu: navigation.getParam('data', []), 
-            total: navigation.getParam('total', 0), 
-            supplier: navigation.getParam('supplier', {}), 
-            date: this.state.selectedDate, 
-            time: this.state.selectedTime, 
+        await this.props.updateTransaction({
+            menu: navigation.getParam('data', []),
+            total: navigation.getParam('total', 0),
+            supplier: navigation.getParam('supplier', {}),
+            date: this.state.selectedDate,
+            time: this.state.selectedTime,
             type: 'ongoing'
         });
 
-        await AsyncStorage.setItem('transaction', JSON.stringify(data));
-
         this.props.navigation.navigate('Transaction');
+        this.setState({ loading: false });
     };
 
     render() {
@@ -135,7 +131,9 @@ class CheckoutScreen extends React.Component {
                         <Text>Total</Text>
                         <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#000' }}>{moneyFormat(this.props.navigation.getParam('total', 0))}</Text>
                     </View>
-                    <Button text='Pay' onPress={this.handlePay} />
+                    {this.state.loading ? <View style={{ backgroundColor: '#F98903', borderRadius: 7, paddingVertical: 8, paddingHorizontal: 24 }}>
+                        <ActivityIndicator size='small' color='#fff' />
+                    </View> : <Button text='Pay' onPress={this.handlePay} /> }
                 </View>
                 <BuyerNavigator navigation={this.props.navigation} />
             </View>
@@ -143,4 +141,7 @@ class CheckoutScreen extends React.Component {
     }
 }
 
-export default CheckoutScreen;
+export default connect(
+    null,
+    { updateTransaction }
+)(CheckoutScreen);
