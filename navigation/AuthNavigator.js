@@ -20,7 +20,7 @@ const AuthNavigator = createStackNavigator(
         }
     },
     {
-        initialRouteName: 'SelectRole',
+        initialRouteName: 'BuyerLogin',
     }
 );
 
